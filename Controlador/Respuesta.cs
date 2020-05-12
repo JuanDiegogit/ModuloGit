@@ -10,7 +10,7 @@ namespace Controlador
     /// <summary>
     /// Este clases sirve de plantilla para devolver la respuesta del servidor
     /// </summary>
-    class Respuesta<T>
+   public class Respuesta<T>
     {
         public string Mensaje {set;get;}
         public T Objeto { set;get; }

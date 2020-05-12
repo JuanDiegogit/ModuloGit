@@ -28,17 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.lblMensaje = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.button4 = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.btnCancelar = new System.Windows.Forms.Button();
+            this.txtContraseña = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.txtUsuario = new System.Windows.Forms.TextBox();
+            this.btnIniciarSeccion = new System.Windows.Forms.Button();
+            this.checkMostrarContraseña = new System.Windows.Forms.CheckBox();
+            this.timerSegundoPlano = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -78,13 +80,13 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.button4, 1, 3);
-            this.tableLayoutPanel1.Controls.Add(this.textBox2, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.btnCancelar, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.txtContraseña, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.textBox1, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.button1, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.checkBox1, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.txtUsuario, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnIniciarSeccion, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.checkMostrarContraseña, 0, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.MaximumSize = new System.Drawing.Size(800, 200);
@@ -97,25 +99,26 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(334, 147);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
-            // button4
+            // btnCancelar
             // 
-            this.button4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button4.Location = new System.Drawing.Point(170, 111);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(161, 27);
-            this.button4.TabIndex = 8;
-            this.button4.Text = "Cancelar";
-            this.button4.UseVisualStyleBackColor = true;
+            this.btnCancelar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnCancelar.Location = new System.Drawing.Point(170, 111);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(161, 27);
+            this.btnCancelar.TabIndex = 8;
+            this.btnCancelar.Text = "Cancelar";
+            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
-            // textBox2
+            // txtContraseña
             // 
-            this.textBox2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.textBox2.Location = new System.Drawing.Point(170, 39);
-            this.textBox2.MinimumSize = new System.Drawing.Size(150, 23);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(161, 23);
-            this.textBox2.TabIndex = 4;
-            this.textBox2.UseSystemPasswordChar = true;
+            this.txtContraseña.Dock = System.Windows.Forms.DockStyle.Top;
+            this.txtContraseña.Location = new System.Drawing.Point(170, 39);
+            this.txtContraseña.MinimumSize = new System.Drawing.Size(150, 23);
+            this.txtContraseña.Name = "txtContraseña";
+            this.txtContraseña.Size = new System.Drawing.Size(161, 20);
+            this.txtContraseña.TabIndex = 4;
+            this.txtContraseña.UseSystemPasswordChar = true;
             // 
             // label3
             // 
@@ -139,36 +142,43 @@
             this.label2.Text = "Usuario";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // textBox1
+            // txtUsuario
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.textBox1.Location = new System.Drawing.Point(170, 3);
-            this.textBox1.MinimumSize = new System.Drawing.Size(0, 23);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(161, 23);
-            this.textBox1.TabIndex = 3;
+            this.txtUsuario.Dock = System.Windows.Forms.DockStyle.Top;
+            this.txtUsuario.Location = new System.Drawing.Point(170, 3);
+            this.txtUsuario.MinimumSize = new System.Drawing.Size(4, 23);
+            this.txtUsuario.Name = "txtUsuario";
+            this.txtUsuario.Size = new System.Drawing.Size(161, 20);
+            this.txtUsuario.TabIndex = 3;
             // 
-            // button1
+            // btnIniciarSeccion
             // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button1.Location = new System.Drawing.Point(170, 75);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(161, 27);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Iniciar sección";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnIniciarSeccion.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnIniciarSeccion.Location = new System.Drawing.Point(170, 75);
+            this.btnIniciarSeccion.Name = "btnIniciarSeccion";
+            this.btnIniciarSeccion.Size = new System.Drawing.Size(161, 27);
+            this.btnIniciarSeccion.TabIndex = 5;
+            this.btnIniciarSeccion.Text = "Iniciar sección";
+            this.btnIniciarSeccion.UseVisualStyleBackColor = true;
+            this.btnIniciarSeccion.Click += new System.EventHandler(this.btnIniciarSeccion_Click);
             // 
-            // checkBox1
+            // checkMostrarContraseña
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.checkBox1.Location = new System.Drawing.Point(46, 75);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(118, 30);
-            this.checkBox1.TabIndex = 9;
-            this.checkBox1.Text = "Mostrar Contraseña";
-            this.checkBox1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkMostrarContraseña.AutoSize = true;
+            this.checkMostrarContraseña.Dock = System.Windows.Forms.DockStyle.Right;
+            this.checkMostrarContraseña.Location = new System.Drawing.Point(46, 75);
+            this.checkMostrarContraseña.Name = "checkMostrarContraseña";
+            this.checkMostrarContraseña.Size = new System.Drawing.Size(118, 30);
+            this.checkMostrarContraseña.TabIndex = 9;
+            this.checkMostrarContraseña.Text = "Mostrar Contraseña";
+            this.checkMostrarContraseña.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkMostrarContraseña.UseVisualStyleBackColor = true;
+            this.checkMostrarContraseña.CheckedChanged += new System.EventHandler(this.checkMostrarContraseña_CheckedChanged);
+            // 
+            // timerSegundoPlano
+            // 
+            this.timerSegundoPlano.Enabled = true;
+            this.timerSegundoPlano.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Login
             // 
@@ -195,13 +205,14 @@
         private System.Windows.Forms.Label lblMensaje;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Button btnCancelar;
+        private System.Windows.Forms.TextBox txtContraseña;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.TextBox txtUsuario;
+        private System.Windows.Forms.Button btnIniciarSeccion;
+        private System.Windows.Forms.CheckBox checkMostrarContraseña;
+        private System.Windows.Forms.Timer timerSegundoPlano;
     }
 }
 
