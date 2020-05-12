@@ -11,7 +11,7 @@ namespace Controlador
     {
        private const string  URL_LOCAL = "http://localhost:56593/"; 
 
-        public async Task <HttpResponseMessage> Get <T>(string url) {
+        public static async Task <HttpResponseMessage> Get (string url) {
 
             HttpClient client = new HttpClient
             {
@@ -23,7 +23,7 @@ namespace Controlador
             return Respuesta;
           
         }
-        public async Task<HttpResponseMessage> Get<T>(string url, int ID) {
+        public static async Task<HttpResponseMessage> Get(string url, int ID) {
 
             HttpClient client = new HttpClient
             {
@@ -38,7 +38,7 @@ namespace Controlador
 
         }
 
-        public async Task<HttpResponseMessage> Post<T>(string url, T entidad)
+        public static async Task<HttpResponseMessage> Post<T>(string url, T entidad)
         {
             HttpClient client = new HttpClient
             {
@@ -50,7 +50,7 @@ namespace Controlador
             return await client.PostAsync(url, httpRequestMessage.Content);
         }
 
-        public async Task<HttpResponseMessage> Put<T>(string url,int id, T entidad)
+        public static async Task<HttpResponseMessage> Put<T>(string url,int id, T entidad)
         {
             HttpClient client = new HttpClient
             {
@@ -62,7 +62,7 @@ namespace Controlador
             return await client.PutAsync(string.Format("{0}/{1}", id, url), httpRequestMessage.Content);
         }
 
-        public async Task<HttpResponseMessage> Delete<T>(string url, int ID)
+        public static async Task<HttpResponseMessage> Delete(string url, int ID)
         {
 
             HttpClient client = new HttpClient
