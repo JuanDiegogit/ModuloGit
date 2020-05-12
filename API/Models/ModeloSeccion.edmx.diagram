@@ -12,6 +12,11 @@
         <AssociationConnector Association="session1Model.FK_Office_Country" ManuallyRouted="false" />
         <AssociationConnector Association="session1Model.FK_Users_Offices" ManuallyRouted="false" />
         <AssociationConnector Association="session1Model.FK_Users_Roles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="session1Model.intentosFallido" Width="1.5" PointX="7.5" PointY="8.75" />
+        <EntityTypeShape EntityType="session1Model.UsuarioBloqueados" Width="1.5" PointX="7.5" PointY="5.75" />
+        <AssociationConnector Association="session1Model.FK__intentosF__Usuar__49C3F6B7" />
+        <AssociationConnector Association="session1Model.FK__UsuarioBl__admin__4D94879B" />
+        <AssociationConnector Association="session1Model.FK__UsuarioBl__Usuar__4E88ABD4" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

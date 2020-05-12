@@ -14,6 +14,14 @@ namespace API.Models
     
     public partial class Users
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Users()
+        {
+            this.intentosFallido = new HashSet<intentosFallido>();
+            this.AdminitradoresQueHaBloquead = new HashSet<UsuarioBloqueados>();
+            this.UsuarioBloqueados = new HashSet<UsuarioBloqueados>();
+        }
+    
         public int ID { get; set; }
         public int RoleID { get; set; }
         public string Email { get; set; }
@@ -26,5 +34,11 @@ namespace API.Models
     
         public virtual Offices Offices { get; set; }
         public virtual Roles Roles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<intentosFallido> intentosFallido { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UsuarioBloqueados> AdminitradoresQueHaBloquead { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UsuarioBloqueados> UsuarioBloqueados { get; set; }
     }
 }

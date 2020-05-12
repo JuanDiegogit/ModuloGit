@@ -4,13 +4,21 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="session1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="session1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Countries">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="intentosFallido">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UsuarioID" Type="int" Nullable="false" />
+          <Property Name="fechaYHora" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Offices">
           <Key>
@@ -43,6 +51,51 @@
           <Property Name="Birthdate" Type="date" />
           <Property Name="Active" Type="int" />
         </EntityType>
+        <EntityType Name="UsuarioBloqueados">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="adminitradorID" Type="int" Nullable="false" />
+          <Property Name="UsuarioID" Type="int" Nullable="false" />
+          <Property Name="fechaYHora" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__intentosF__Usuar__49C3F6B7">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="intentosFallido" Type="Self.intentosFallido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="intentosFallido">
+              <PropertyRef Name="UsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioBl__admin__4D94879B">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UsuarioBloqueados" Type="Self.UsuarioBloqueados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UsuarioBloqueados">
+              <PropertyRef Name="adminitradorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioBl__Usuar__4E88ABD4">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UsuarioBloqueados" Type="Self.UsuarioBloqueados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UsuarioBloqueados">
+              <PropertyRef Name="UsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Office_Country">
           <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
           <End Role="Offices" Type="Self.Offices" Multiplicity="*" />
@@ -81,9 +134,23 @@
         </Association>
         <EntityContainer Name="session1ModelStoreContainer">
           <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="intentosFallido" EntityType="Self.intentosFallido" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Offices" EntityType="Self.Offices" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsuarioBloqueados" EntityType="Self.UsuarioBloqueados" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__intentosF__Usuar__49C3F6B7" Association="Self.FK__intentosF__Usuar__49C3F6B7">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="intentosFallido" EntitySet="intentosFallido" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioBl__admin__4D94879B" Association="Self.FK__UsuarioBl__admin__4D94879B">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsuarioBloqueados" EntitySet="UsuarioBloqueados" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioBl__Usuar__4E88ABD4" Association="Self.FK__UsuarioBl__Usuar__4E88ABD4">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsuarioBloqueados" EntitySet="UsuarioBloqueados" />
+          </AssociationSet>
           <AssociationSet Name="FK_Office_Country" Association="Self.FK_Office_Country">
             <End Role="Countries" EntitySet="Countries" />
             <End Role="Offices" EntitySet="Offices" />
@@ -97,8 +164,7 @@
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="session1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -145,6 +211,9 @@
           <Property Name="Active" Type="Int32" />
           <NavigationProperty Name="Offices" Relationship="Self.FK_Users_Offices" FromRole="Users" ToRole="Offices" />
           <NavigationProperty Name="Roles" Relationship="Self.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
+          <NavigationProperty Name="intentosFallido" Relationship="session1Model.FK__intentosF__Usuar__49C3F6B7" FromRole="Users" ToRole="intentosFallido" />
+          <NavigationProperty Name="AdminitradoresQueHaBloquead" Relationship="session1Model.FK__UsuarioBl__admin__4D94879B" FromRole="Users" ToRole="UsuarioBloqueados" />
+          <NavigationProperty Name="UsuarioBloqueados" Relationship="session1Model.FK__UsuarioBl__Usuar__4E88ABD4" FromRole="Users" ToRole="UsuarioBloqueados" />
         </EntityType>
         <Association Name="FK_Office_Country">
           <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
@@ -199,7 +268,77 @@
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
+          <EntitySet Name="intentosFallido" EntityType="session1Model.intentosFallido" />
+          <EntitySet Name="UsuarioBloqueados" EntityType="session1Model.UsuarioBloqueados" />
+          <AssociationSet Name="FK__intentosF__Usuar__49C3F6B7" Association="session1Model.FK__intentosF__Usuar__49C3F6B7">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="intentosFallido" EntitySet="intentosFallido" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioBl__admin__4D94879B" Association="session1Model.FK__UsuarioBl__admin__4D94879B">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsuarioBloqueados" EntitySet="UsuarioBloqueados" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioBl__Usuar__4E88ABD4" Association="session1Model.FK__UsuarioBl__Usuar__4E88ABD4">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsuarioBloqueados" EntitySet="UsuarioBloqueados" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="intentosFallido">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UsuarioID" Type="Int32" Nullable="false" />
+          <Property Name="fechaYHora" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Users" Relationship="session1Model.FK__intentosF__Usuar__49C3F6B7" FromRole="intentosFallido" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="UsuarioBloqueados">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="adminitradorID" Type="Int32" Nullable="false" />
+          <Property Name="UsuarioID" Type="Int32" Nullable="false" />
+          <Property Name="fechaYHora" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Admin" Relationship="session1Model.FK__UsuarioBl__admin__4D94879B" FromRole="UsuarioBloqueados" ToRole="Users" />
+          <NavigationProperty Name="User" Relationship="session1Model.FK__UsuarioBl__Usuar__4E88ABD4" FromRole="UsuarioBloqueados" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK__intentosF__Usuar__49C3F6B7">
+          <End Type="session1Model.Users" Role="Users" Multiplicity="1" />
+          <End Type="session1Model.intentosFallido" Role="intentosFallido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="intentosFallido">
+              <PropertyRef Name="UsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioBl__admin__4D94879B">
+          <End Type="session1Model.Users" Role="Users" Multiplicity="1" />
+          <End Type="session1Model.UsuarioBloqueados" Role="UsuarioBloqueados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UsuarioBloqueados">
+              <PropertyRef Name="adminitradorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioBl__Usuar__4E88ABD4">
+          <End Type="session1Model.Users" Role="Users" Multiplicity="1" />
+          <End Type="session1Model.UsuarioBloqueados" Role="UsuarioBloqueados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UsuarioBloqueados">
+              <PropertyRef Name="UsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -245,6 +384,25 @@
                 <ScalarProperty Name="OfficeID" ColumnName="OfficeID" />
                 <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="intentosFallido">
+            <EntityTypeMapping TypeName="session1Model.intentosFallido">
+              <MappingFragment StoreEntitySet="intentosFallido">
+                <ScalarProperty Name="fechaYHora" ColumnName="fechaYHora" />
+                <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsuarioBloqueados">
+            <EntityTypeMapping TypeName="session1Model.UsuarioBloqueados">
+              <MappingFragment StoreEntitySet="UsuarioBloqueados">
+                <ScalarProperty Name="fechaYHora" ColumnName="fechaYHora" />
+                <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="adminitradorID" ColumnName="adminitradorID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
