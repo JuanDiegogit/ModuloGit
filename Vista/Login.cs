@@ -27,10 +27,21 @@ namespace Vista
         {
             txtContraseña.UseSystemPasswordChar = visible;
         }
-        public async Task AumentarIntento()
+        private async Task RegistrarIntento(Users users)
+        {
+            intentosFallido intentosFallido = new intentosFallido() {
+                UsuarioID = users.ID,
+                fechaYHora=DateTime.Now
+            };
+          await  Crud.Post<intentosFallido>("api/intentosFallidos",intentosFallido);
+        }
+        public async void AumentarIntento(Users users = null)
         {
             NUMERO_DE_INTENTOS++;
-
+            if (users != null)
+            {
+             await  RegistrarIntento(users);
+            }
            
             if (NUMERO_DE_INTENTOS==3)
             {
@@ -63,6 +74,21 @@ namespace Vista
             txtUsuario.Enabled = true;
             checkMostrarContraseña.Enabled = true;
         }
+        private async Task<Users> ObtenerAdminitradorQueBloqueo(Users users)
+        {
+            Respuesta<IEnumerable<UsuarioBloqueados>> respuestaUB = await Respuesta<IEnumerable<UsuarioBloqueados>>.GetRespuesta<IEnumerable<UsuarioBloqueados>>(await Crud.Get("api/usuarioBloqueados"));
+
+            Users admin = new Users { FirstName = "el Sistema" };
+
+            if (respuestaUB.Objeto.Count() !=0) {
+                IEnumerable<UsuarioBloqueados> listaDeUsuarioBloqueados = respuestaUB.Objeto;
+
+               admin = listaDeUsuarioBloqueados.First(T => T.UsuarioID == users.ID).Admin;
+            }
+
+            return admin;
+        }
+
         private async void IniciarSesion(String usuario , String contraseña)
         {
             btnIniciarSeccion.Enabled = false;
@@ -78,6 +104,13 @@ namespace Vista
             Respuesta<IEnumerable<Users>> respuesta = await Respuesta<IEnumerable<Users>>.GetRespuesta<IEnumerable<Users>>(await Crud.Get("api/users"));
 
             IEnumerable<Users> listaDeUsuario = respuesta.Objeto;
+            if (listaDeUsuario.Count() == 0)
+            {
+                mensaje = "No hay usuarios en la base de dato";
+                lblMensaje.Text = mensaje;
+                btnIniciarSeccion.Enabled = true;
+                return;
+            }
             if(listaDeUsuario.Count(E=>E.Email == usuario) == 0)
             {
                 mensaje = "No Existe un Usuario registrado con este correo "+usuario;
@@ -92,18 +125,20 @@ namespace Vista
                 {
                     mensaje = "La contraseña es Incorrecta";
                     lblMensaje.Text = mensaje;
-                    AumentarIntento();
+                    AumentarIntento(listaDeUsuario.First(E => E.Email == usuario));
                     btnIniciarSeccion.Enabled = true;
                     return;
                 }
                 else
                 {
 
-                    USUARIO_ACTIVO = listaDeUsuario.FirstOrDefault(E => E.Email == usuario && E.Password == contraseña);
+                    USUARIO_ACTIVO = listaDeUsuario.First(E => E.Email == usuario && E.Password == contraseña);
 
                     if (USUARIO_ACTIVO.Active == 0)
                     {
-                        mensaje = "el usuario Esta inactivo";
+                       
+                        Users admin = await ObtenerAdminitradorQueBloqueo(USUARIO_ACTIVO);
+                        mensaje = String.Format("el usuario Esta inactivo por {0}",admin.FirstName);
                         lblMensaje.Text = mensaje;
                         AumentarIntento();
                         btnIniciarSeccion.Enabled = true;
