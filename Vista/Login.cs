@@ -195,6 +195,8 @@ namespace Vista
                 {
                     btnIniciarSeccion.Enabled = true;
                     timerSegundoPlano.Enabled = false;
+                    txtContraseña.Text = "";
+                    txtUsuario.Text = "";
                     this.Show();
                    // this.Focus();
                 }
