@@ -44,10 +44,10 @@ namespace Controlador
             {
                 BaseAddress = new Uri(URL_LOCAL)
             };
-            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, new Uri(string.Format("{0}", url)));
+            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, new Uri(string.Format("{0}",URL_LOCAL +url)));
             httpRequestMessage.Content = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(entidad), Encoding.UTF8, "Application/json");
 
-            return await client.PostAsync(url, httpRequestMessage.Content);
+            return await client.PostAsync(URL_LOCAL+ url, httpRequestMessage.Content);
         }
 
         public static async Task<HttpResponseMessage> Put<T>(string url,int id, T entidad)
@@ -56,10 +56,10 @@ namespace Controlador
             {
                 BaseAddress = new Uri(URL_LOCAL)
             };
-            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Put, new Uri(string.Format("{0}/{1}",id, url)));
+            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Put, new Uri(string.Format("{0}/{1}", URL_LOCAL + url,id)));
             httpRequestMessage.Content = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(entidad), Encoding.UTF8, "Application/json");
 
-            return await client.PutAsync(string.Format("{0}/{1}", id, url), httpRequestMessage.Content);
+            return await client.PutAsync(string.Format("{0}/{1}", id,URL_LOCAL+ url), httpRequestMessage.Content);
         }
 
         public static async Task<HttpResponseMessage> Delete(string url, int ID)
