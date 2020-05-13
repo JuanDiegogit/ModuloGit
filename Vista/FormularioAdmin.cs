@@ -71,12 +71,17 @@ namespace Vista
             comboOficina.Enabled = false;
             if(comboOficina.SelectedIndex == 0)
             {
-              await  llenarTabla(dataGridView2);
+              await  llenarTabla(TablaUsuario);
             }
             else
             {
-                await llenarTabla(dataGridView2,(int)comboOficina.SelectedValue);
+                await llenarTabla(TablaUsuario,(int)comboOficina.SelectedValue);
             }
+        }
+
+        private void btnSalir_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

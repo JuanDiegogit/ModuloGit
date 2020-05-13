@@ -30,23 +30,23 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnCambiarRol = new System.Windows.Forms.Button();
+            this.btnRestablecer = new System.Windows.Forms.Button();
+            this.btnSuspender = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.button4 = new System.Windows.Forms.Button();
+            this.btnAgregar = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.comboOficina = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.button5 = new System.Windows.Forms.Button();
+            this.TablaUsuario = new System.Windows.Forms.DataGridView();
+            this.btnSalir = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TablaUsuario)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -62,45 +62,45 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.button3);
-            this.panel1.Controls.Add(this.button2);
-            this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.btnCambiarRol);
+            this.panel1.Controls.Add(this.btnRestablecer);
+            this.panel1.Controls.Add(this.btnSuspender);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 265);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(610, 43);
             this.panel1.TabIndex = 2;
             // 
-            // button3
+            // btnCambiarRol
             // 
-            this.button3.Location = new System.Drawing.Point(476, 8);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(124, 23);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "Cambiar Rol";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnCambiarRol.Location = new System.Drawing.Point(476, 8);
+            this.btnCambiarRol.Name = "btnCambiarRol";
+            this.btnCambiarRol.Size = new System.Drawing.Size(124, 23);
+            this.btnCambiarRol.TabIndex = 2;
+            this.btnCambiarRol.Text = "Cambiar Rol";
+            this.btnCambiarRol.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btnRestablecer
             // 
-            this.button2.Location = new System.Drawing.Point(246, 8);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(124, 23);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Restablecer  Cuenta";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnRestablecer.Location = new System.Drawing.Point(246, 8);
+            this.btnRestablecer.Name = "btnRestablecer";
+            this.btnRestablecer.Size = new System.Drawing.Size(124, 23);
+            this.btnRestablecer.TabIndex = 1;
+            this.btnRestablecer.Text = "Restablecer  Cuenta";
+            this.btnRestablecer.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // btnSuspender
             // 
-            this.button1.Location = new System.Drawing.Point(16, 8);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(124, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Suspender Cuenta";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnSuspender.Location = new System.Drawing.Point(16, 8);
+            this.btnSuspender.Name = "btnSuspender";
+            this.btnSuspender.Size = new System.Drawing.Size(124, 23);
+            this.btnSuspender.TabIndex = 0;
+            this.btnSuspender.Text = "Suspender Cuenta";
+            this.btnSuspender.UseVisualStyleBackColor = true;
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.button4);
+            this.panel2.Controls.Add(this.btnAgregar);
             this.panel2.Controls.Add(this.label3);
             this.panel2.Controls.Add(this.pictureBox1);
             this.panel2.Controls.Add(this.comboOficina);
@@ -111,14 +111,14 @@
             this.panel2.Size = new System.Drawing.Size(610, 46);
             this.panel2.TabIndex = 3;
             // 
-            // button4
+            // btnAgregar
             // 
-            this.button4.Location = new System.Drawing.Point(454, 8);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(146, 32);
-            this.button4.TabIndex = 4;
-            this.button4.Text = "Agregar Usuario";
-            this.button4.UseVisualStyleBackColor = true;
+            this.btnAgregar.Location = new System.Drawing.Point(454, 8);
+            this.btnAgregar.Name = "btnAgregar";
+            this.btnAgregar.Size = new System.Drawing.Size(146, 32);
+            this.btnAgregar.TabIndex = 4;
+            this.btnAgregar.Text = "Agregar Usuario";
+            this.btnAgregar.UseVisualStyleBackColor = true;
             // 
             // label3
             // 
@@ -158,7 +158,7 @@
             // 
             // panel3
             // 
-            this.panel3.Controls.Add(this.dataGridView2);
+            this.panel3.Controls.Add(this.TablaUsuario);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 85);
             this.panel3.Name = "panel3";
@@ -166,31 +166,32 @@
             this.panel3.Size = new System.Drawing.Size(610, 180);
             this.panel3.TabIndex = 4;
             // 
-            // dataGridView2
+            // TablaUsuario
             // 
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView2.Location = new System.Drawing.Point(10, 10);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.Size = new System.Drawing.Size(590, 160);
-            this.dataGridView2.TabIndex = 4;
+            this.TablaUsuario.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.TablaUsuario.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TablaUsuario.Location = new System.Drawing.Point(10, 10);
+            this.TablaUsuario.Name = "TablaUsuario";
+            this.TablaUsuario.Size = new System.Drawing.Size(590, 160);
+            this.TablaUsuario.TabIndex = 4;
             // 
-            // button5
+            // btnSalir
             // 
-            this.button5.BackColor = System.Drawing.Color.Red;
-            this.button5.Location = new System.Drawing.Point(454, 1);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(146, 32);
-            this.button5.TabIndex = 3;
-            this.button5.Text = "Salir";
-            this.button5.UseVisualStyleBackColor = false;
+            this.btnSalir.BackColor = System.Drawing.Color.Red;
+            this.btnSalir.Location = new System.Drawing.Point(454, 1);
+            this.btnSalir.Name = "btnSalir";
+            this.btnSalir.Size = new System.Drawing.Size(146, 32);
+            this.btnSalir.TabIndex = 3;
+            this.btnSalir.Text = "Salir";
+            this.btnSalir.UseVisualStyleBackColor = false;
+            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
             // 
             // FormularioAdmin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(610, 308);
-            this.Controls.Add(this.button5);
+            this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -203,7 +204,7 @@
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TablaUsuario)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -212,17 +213,17 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnSalir;
+        private System.Windows.Forms.Button btnCambiarRol;
+        private System.Windows.Forms.Button btnRestablecer;
+        private System.Windows.Forms.Button btnSuspender;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btnAgregar;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ComboBox comboOficina;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.DataGridView TablaUsuario;
     }
 }
