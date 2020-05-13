@@ -177,7 +177,6 @@
             // 
             // timerSegundoPlano
             // 
-            this.timerSegundoPlano.Enabled = true;
             this.timerSegundoPlano.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Login

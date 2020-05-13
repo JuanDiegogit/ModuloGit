@@ -146,6 +146,7 @@ namespace Vista
                     }
                     else
                     {
+                        timerSegundoPlano.Enabled = true;
                         if (USUARIO_ACTIVO.RoleID == 1)
                         {
                             new FormularioAdmin() { StartPosition  = FormStartPosition.CenterScreen }.Show();
@@ -192,6 +193,8 @@ namespace Vista
             {
                 if (Application.OpenForms.Count == 1)
                 {
+                    btnIniciarSeccion.Enabled = true;
+                    timerSegundoPlano.Enabled = false;
                     this.Show();
                    // this.Focus();
                 }
