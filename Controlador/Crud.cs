@@ -59,7 +59,7 @@ namespace Controlador
             HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Put, new Uri(string.Format("{0}/{1}", URL_LOCAL + url,id)));
             httpRequestMessage.Content = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(entidad), Encoding.UTF8, "Application/json");
 
-            return await client.PutAsync(string.Format("{0}/{1}", id,URL_LOCAL+ url), httpRequestMessage.Content);
+            return await client.PutAsync(string.Format("{0}/{1}", URL_LOCAL+ url,id), httpRequestMessage.Content);
         }
 
         public static async Task<HttpResponseMessage> Delete(string url, int ID)
@@ -71,7 +71,7 @@ namespace Controlador
             };
             HttpResponseMessage Respuesta = new HttpResponseMessage();
 
-           return await client.DeleteAsync(String.Format("{0}/{1}", url, ID));
+           return await client.DeleteAsync(String.Format("{0}/{1}", URL_LOCAL+ url, ID));
 
           
 

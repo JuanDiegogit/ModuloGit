@@ -14,7 +14,7 @@ namespace Controlador
     {
         public string Mensaje {set;get;}
         public T Objeto { set;get; }
-
+      
       
 
         public async static Task<Respuesta<T>> GetRespuesta<T> (HttpResponseMessage httpResponseMessage) 
@@ -29,7 +29,7 @@ namespace Controlador
             }
             catch (Exception)
             {
-
+                objeto = default(T);
             }
             return new Respuesta<T>() { Mensaje = mensaje,Objeto = objeto };
         }
