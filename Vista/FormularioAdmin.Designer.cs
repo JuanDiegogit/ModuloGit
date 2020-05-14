@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnCambiarRol = new System.Windows.Forms.Button();
@@ -40,9 +41,10 @@
             this.comboOficina = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.btnSalir = new System.Windows.Forms.Button();
-            this.lblAlerta = new System.Windows.Forms.Label();
             this.TablaUsuario = new System.Windows.Forms.DataGridView();
+            this.lblAlerta = new System.Windows.Forms.Label();
+            this.btnSalir = new System.Windows.Forms.Button();
+            this.timerSegundoPlano = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -80,6 +82,7 @@
             this.btnCambiarRol.TabIndex = 2;
             this.btnCambiarRol.Text = "Cambiar Rol";
             this.btnCambiarRol.UseVisualStyleBackColor = true;
+            this.btnCambiarRol.Click += new System.EventHandler(this.btnCambiarRol_Click);
             // 
             // btnRestablecer
             // 
@@ -122,6 +125,7 @@
             this.btnAgregar.TabIndex = 4;
             this.btnAgregar.Text = "Agregar Usuario";
             this.btnAgregar.UseVisualStyleBackColor = true;
+            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
             // 
             // label3
             // 
@@ -170,26 +174,6 @@
             this.panel3.Size = new System.Drawing.Size(610, 180);
             this.panel3.TabIndex = 4;
             // 
-            // btnSalir
-            // 
-            this.btnSalir.BackColor = System.Drawing.Color.Red;
-            this.btnSalir.Location = new System.Drawing.Point(454, 1);
-            this.btnSalir.Name = "btnSalir";
-            this.btnSalir.Size = new System.Drawing.Size(146, 32);
-            this.btnSalir.TabIndex = 3;
-            this.btnSalir.Text = "Salir";
-            this.btnSalir.UseVisualStyleBackColor = false;
-            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
-            // 
-            // lblAlerta
-            // 
-            this.lblAlerta.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblAlerta.Location = new System.Drawing.Point(10, 10);
-            this.lblAlerta.Name = "lblAlerta";
-            this.lblAlerta.Size = new System.Drawing.Size(590, 23);
-            this.lblAlerta.TabIndex = 0;
-            this.lblAlerta.Visible = false;
-            // 
             // TablaUsuario
             // 
             this.TablaUsuario.AllowUserToAddRows = false;
@@ -204,6 +188,30 @@
             this.TablaUsuario.TabIndex = 5;
             this.TablaUsuario.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.TablaUsuario_CellFormatting);
             this.TablaUsuario.SelectionChanged += new System.EventHandler(this.TablaUsuario_SelectionChanged);
+            // 
+            // lblAlerta
+            // 
+            this.lblAlerta.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblAlerta.Location = new System.Drawing.Point(10, 10);
+            this.lblAlerta.Name = "lblAlerta";
+            this.lblAlerta.Size = new System.Drawing.Size(590, 23);
+            this.lblAlerta.TabIndex = 0;
+            this.lblAlerta.Visible = false;
+            // 
+            // btnSalir
+            // 
+            this.btnSalir.BackColor = System.Drawing.Color.Red;
+            this.btnSalir.Location = new System.Drawing.Point(454, 1);
+            this.btnSalir.Name = "btnSalir";
+            this.btnSalir.Size = new System.Drawing.Size(146, 32);
+            this.btnSalir.TabIndex = 3;
+            this.btnSalir.Text = "Salir";
+            this.btnSalir.UseVisualStyleBackColor = false;
+            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
+            // 
+            // timerSegundoPlano
+            // 
+            this.timerSegundoPlano.Tick += new System.EventHandler(this.timerSegundoPlano_Tick);
             // 
             // FormularioAdmin
             // 
@@ -245,5 +253,6 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.DataGridView TablaUsuario;
         private System.Windows.Forms.Label lblAlerta;
+        private System.Windows.Forms.Timer timerSegundoPlano;
     }
 }

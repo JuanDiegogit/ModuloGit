@@ -18,6 +18,7 @@ namespace Vista
 {
     public partial class FormularioAdmin : Form
     {
+        private int CANTIDAD_DE_FORMULARIO_ABIERTO { set; get; }
         public FormularioAdmin()
         {
             InitializeComponent();
@@ -47,8 +48,9 @@ namespace Vista
                 await Crud.Post<UsuarioBloqueados>("api/UsuarioBloqueados", usuarioBloqueado);
                 btnSuspender.Enabled = true;
                 TablaUsuario.Enabled = true;
-                await MostrarAlerta("Se suspendio correctamente", Color.DarkGreen);
                 await filtrar();
+                await MostrarAlerta("Se suspendio correctamente", Color.DarkGreen);
+              
                 return;
             }
             btnSuspender.Enabled = true;
@@ -86,8 +88,9 @@ namespace Vista
 
                 btnRestablecer.Enabled = true;
                 TablaUsuario.Enabled = true;
-                await MostrarAlerta("Se restablecio correctamente", Color.DarkGreen);
                 await filtrar();
+                await MostrarAlerta("Se restablecio correctamente", Color.DarkGreen);
+              
                 return;
             }
             btnSuspender.Enabled = true;
@@ -237,6 +240,36 @@ namespace Vista
         private async void btnRestablecer_Click(object sender, EventArgs e)
         {
             await RestablecerCuenta();
+        }
+
+        private void timerSegundoPlano_Tick(object sender, EventArgs e)
+        {
+            if (Application.OpenForms.Count == CANTIDAD_DE_FORMULARIO_ABIERTO)
+            {
+                if (!this.Enabled)
+                {
+                    timerSegundoPlano.Enabled = false;
+                    this.Enabled = true;
+                    this.Focus();
+                }
+            }
+        }
+
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            CANTIDAD_DE_FORMULARIO_ABIERTO = Application.OpenForms.Count;
+            timerSegundoPlano.Enabled = true;
+            new AgregarUsuario() {StartPosition =FormStartPosition.CenterScreen }.Show();
+            this.Enabled = false;
+        }
+
+        private void btnCambiarRol_Click(object sender, EventArgs e)
+        {
+
+            CANTIDAD_DE_FORMULARIO_ABIERTO = Application.OpenForms.Count;
+            timerSegundoPlano.Enabled = true;
+            new CambiarRol() { StartPosition = FormStartPosition.CenterScreen }.Show();
+            this.Enabled = false;
         }
     }
 }
