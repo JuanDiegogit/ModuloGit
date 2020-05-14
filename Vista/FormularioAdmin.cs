@@ -23,58 +23,85 @@ namespace Vista
         {
             InitializeComponent();
         }
-        private async Task suspenderCuenta() {
+        public async Task<Users> GetUserAsync(int ID)
+        {
+            Respuesta<Users> respuesta = await Respuesta<Users>.GetRespuesta<Users>(await Crud.Get("api/users", ID));
 
-            btnSuspender.Enabled = false;
-            TablaUsuario.Enabled = false;
-            int ID=0;
-            int.TryParse(TablaUsuario.CurrentRow.Cells["ID"].Value.ToString(),  out ID);
-            Respuesta<Users> respuesta = await Respuesta<Users>.GetRespuesta<Users>( await Crud.Get("api/users",ID));
+            return respuesta.Objeto;
+        }
 
-            Users users = respuesta.Objeto;
-            users.Active = 0;
-            respuesta = await Respuesta<Users>.GetRespuesta<Users>(await Crud.Put<Users>("api/users", ID, users));
-          
-
+        private void setHabilitar(bool activo, List<Control> controls)
+        {
+            foreach (var control in controls)
+            {
+                control.Enabled = activo;
+            }
+        }
+        private async Task<bool> CambiarEstadoAsync(int ID, bool activo)
+        {
+            Users users = await GetUserAsync(ID);
+            users.Active = activo?1:0;
+            Respuesta<Users> respuesta = await Respuesta<Users>.GetRespuesta<Users>(await Crud.Put<Users>("api/users", ID, users));
             if (respuesta.Mensaje.Equals(HttpStatusCode.NoContent.ToString()))
             {
-                UsuarioBloqueados usuarioBloqueado = new UsuarioBloqueados
-                {
-                    adminitradorID = Login.USUARIO_ACTIVO.ID,
-                    UsuarioID = users.ID,
-                    fechaYHora = DateTime.Now
 
-                };
-                await Crud.Post<UsuarioBloqueados>("api/UsuarioBloqueados", usuarioBloqueado);
-                btnSuspender.Enabled = true;
-                TablaUsuario.Enabled = true;
+                return true;
+            }
+            await MostrarAlerta(respuesta.Mensaje, Color.DarkGreen);
+            return false;
+        }
+     
+        private async Task suspenderCuenta() {
+
+
+            setHabilitar(false,new List<Control>() {btnSuspender,TablaUsuario });
+
+            int ID=0;
+            int.TryParse(TablaUsuario.CurrentRow.Cells["ID"].Value.ToString(),  out ID);
+
+           
+
+            if ( await CambiarEstadoAsync(ID,false))
+            {
+                await InsertarUsuarioBloqueado(await GetUserAsync(ID));
+
+                setHabilitar(true, new List<Control>() { btnSuspender, TablaUsuario });
+
                 await filtrar();
                 await MostrarAlerta("Se suspendio correctamente", Color.DarkGreen);
-              
+
                 return;
             }
-            btnSuspender.Enabled = true;
-            TablaUsuario.Enabled = true;
-            await MostrarAlerta(respuesta.Mensaje, Color.DarkGreen);
+
+            setHabilitar(true, new List<Control>() { btnSuspender, TablaUsuario });
+
+
             return;
 
            
         }
+
+        private static async Task InsertarUsuarioBloqueado(Users users)
+        {
+            UsuarioBloqueados usuarioBloqueado = new UsuarioBloqueados
+            {
+                adminitradorID = Login.USUARIO_ACTIVO.ID,
+                UsuarioID = users.ID,
+                fechaYHora = DateTime.Now
+
+            };
+            await Crud.Post<UsuarioBloqueados>("api/UsuarioBloqueados", usuarioBloqueado);
+        }
+
         private async Task RestablecerCuenta()
         {
-
-            btnRestablecer.Enabled = false;
-            TablaUsuario.Enabled = false;
+            setHabilitar(false, new List<Control> { btnRestablecer, TablaUsuario });
+         
             int ID = 0;
             int.TryParse(TablaUsuario.CurrentRow.Cells["ID"].Value.ToString(), out ID);
-            Respuesta<Users> respuesta = await Respuesta<Users>.GetRespuesta<Users>(await Crud.Get("api/users", ID));
 
-            Users users = respuesta.Objeto;
-            users.Active = 1;
-            respuesta = await Respuesta<Users>.GetRespuesta<Users>(await Crud.Put<Users>("api/users", ID, users));
-
-
-            if (respuesta.Mensaje.Equals(HttpStatusCode.NoContent.ToString()))
+           
+            if (await CambiarEstadoAsync(ID,true))
             {
 
 
@@ -86,16 +113,16 @@ namespace Vista
                     await Crud.Delete("api/usuarioBloqueados",usuarioB.ID);
                 }
 
-                btnRestablecer.Enabled = true;
-                TablaUsuario.Enabled = true;
+                setHabilitar(true, new List<Control> { btnRestablecer, TablaUsuario });
+
                 await filtrar();
                 await MostrarAlerta("Se restablecio correctamente", Color.DarkGreen);
               
                 return;
             }
-            btnSuspender.Enabled = true;
-            TablaUsuario.Enabled = true;
-            await MostrarAlerta(respuesta.Mensaje, Color.DarkGreen);
+
+            setHabilitar(true, new List<Control> { btnRestablecer, TablaUsuario });
+
             return;
 
 
@@ -263,12 +290,18 @@ namespace Vista
             this.Enabled = false;
         }
 
-        private void btnCambiarRol_Click(object sender, EventArgs e)
+       
+        private async void btnCambiarRol_Click(object sender, EventArgs e)
         {
+            int ID = 0;
+            int.TryParse(TablaUsuario.CurrentRow.Cells["ID"].Value.ToString(), out ID);
+            Respuesta<Users> respuesta = await Respuesta<Users>.GetRespuesta<Users>(await Crud.Get("api/users", ID));
+
+            Users users = respuesta.Objeto;
 
             CANTIDAD_DE_FORMULARIO_ABIERTO = Application.OpenForms.Count;
             timerSegundoPlano.Enabled = true;
-            new CambiarRol() { StartPosition = FormStartPosition.CenterScreen }.Show();
+            new CambiarRol() { StartPosition = FormStartPosition.CenterScreen, USUARIO = users }.Show();
             this.Enabled = false;
         }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using API.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,16 @@ namespace Vista
 {
     public partial class CambiarRol : Form
     {
+        public Users USUARIO { set; get; }
         public CambiarRol()
         {
             InitializeComponent();
         }
+
+        private void CambiarRol_Load(object sender, EventArgs e)
+        {
+
+        }
+       
     }
 }
