@@ -17,7 +17,7 @@ namespace Vista
     {
 
         private int NUMERO_DE_INTENTOS = 0;
-        public Users USUARIO_ACTIVO {  private set; get; }
+        public static Users USUARIO_ACTIVO {  private set; get; }
         public Login()
         {
             InitializeComponent();

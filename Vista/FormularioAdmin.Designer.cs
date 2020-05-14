@@ -40,8 +40,9 @@
             this.comboOficina = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.TablaUsuario = new System.Windows.Forms.DataGridView();
             this.btnSalir = new System.Windows.Forms.Button();
+            this.lblAlerta = new System.Windows.Forms.Label();
+            this.TablaUsuario = new System.Windows.Forms.DataGridView();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -88,6 +89,7 @@
             this.btnRestablecer.TabIndex = 1;
             this.btnRestablecer.Text = "Restablecer  Cuenta";
             this.btnRestablecer.UseVisualStyleBackColor = true;
+            this.btnRestablecer.Click += new System.EventHandler(this.btnRestablecer_Click);
             // 
             // btnSuspender
             // 
@@ -97,6 +99,7 @@
             this.btnSuspender.TabIndex = 0;
             this.btnSuspender.Text = "Suspender Cuenta";
             this.btnSuspender.UseVisualStyleBackColor = true;
+            this.btnSuspender.Click += new System.EventHandler(this.btnSuspender_Click);
             // 
             // panel2
             // 
@@ -159,21 +162,13 @@
             // panel3
             // 
             this.panel3.Controls.Add(this.TablaUsuario);
+            this.panel3.Controls.Add(this.lblAlerta);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 85);
             this.panel3.Name = "panel3";
             this.panel3.Padding = new System.Windows.Forms.Padding(10);
             this.panel3.Size = new System.Drawing.Size(610, 180);
             this.panel3.TabIndex = 4;
-            // 
-            // TablaUsuario
-            // 
-            this.TablaUsuario.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.TablaUsuario.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TablaUsuario.Location = new System.Drawing.Point(10, 10);
-            this.TablaUsuario.Name = "TablaUsuario";
-            this.TablaUsuario.Size = new System.Drawing.Size(590, 160);
-            this.TablaUsuario.TabIndex = 4;
             // 
             // btnSalir
             // 
@@ -185,6 +180,30 @@
             this.btnSalir.Text = "Salir";
             this.btnSalir.UseVisualStyleBackColor = false;
             this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
+            // 
+            // lblAlerta
+            // 
+            this.lblAlerta.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblAlerta.Location = new System.Drawing.Point(10, 10);
+            this.lblAlerta.Name = "lblAlerta";
+            this.lblAlerta.Size = new System.Drawing.Size(590, 23);
+            this.lblAlerta.TabIndex = 0;
+            this.lblAlerta.Visible = false;
+            // 
+            // TablaUsuario
+            // 
+            this.TablaUsuario.AllowUserToAddRows = false;
+            this.TablaUsuario.AllowUserToDeleteRows = false;
+            this.TablaUsuario.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.TablaUsuario.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TablaUsuario.Location = new System.Drawing.Point(10, 33);
+            this.TablaUsuario.Name = "TablaUsuario";
+            this.TablaUsuario.ReadOnly = true;
+            this.TablaUsuario.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.TablaUsuario.Size = new System.Drawing.Size(590, 137);
+            this.TablaUsuario.TabIndex = 5;
+            this.TablaUsuario.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.TablaUsuario_CellFormatting);
+            this.TablaUsuario.SelectionChanged += new System.EventHandler(this.TablaUsuario_SelectionChanged);
             // 
             // FormularioAdmin
             // 
@@ -225,5 +244,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.DataGridView TablaUsuario;
+        private System.Windows.Forms.Label lblAlerta;
     }
 }

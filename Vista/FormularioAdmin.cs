@@ -4,7 +4,10 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using API.Models;
@@ -19,6 +22,100 @@ namespace Vista
         {
             InitializeComponent();
         }
+        private async Task suspenderCuenta() {
+
+            btnSuspender.Enabled = false;
+            TablaUsuario.Enabled = false;
+            int ID=0;
+            int.TryParse(TablaUsuario.CurrentRow.Cells["ID"].Value.ToString(),  out ID);
+            Respuesta<Users> respuesta = await Respuesta<Users>.GetRespuesta<Users>( await Crud.Get("api/users",ID));
+
+            Users users = respuesta.Objeto;
+            users.Active = 0;
+            respuesta = await Respuesta<Users>.GetRespuesta<Users>(await Crud.Put<Users>("api/users", ID, users));
+          
+
+            if (respuesta.Mensaje.Equals(HttpStatusCode.NoContent.ToString()))
+            {
+                UsuarioBloqueados usuarioBloqueado = new UsuarioBloqueados
+                {
+                    adminitradorID = Login.USUARIO_ACTIVO.ID,
+                    UsuarioID = users.ID,
+                    fechaYHora = DateTime.Now
+
+                };
+                await Crud.Post<UsuarioBloqueados>("api/UsuarioBloqueados", usuarioBloqueado);
+                btnSuspender.Enabled = true;
+                TablaUsuario.Enabled = true;
+                await MostrarAlerta("Se suspendio correctamente", Color.DarkGreen);
+                await filtrar();
+                return;
+            }
+            btnSuspender.Enabled = true;
+            TablaUsuario.Enabled = true;
+            await MostrarAlerta(respuesta.Mensaje, Color.DarkGreen);
+            return;
+
+           
+        }
+        private async Task RestablecerCuenta()
+        {
+
+            btnRestablecer.Enabled = false;
+            TablaUsuario.Enabled = false;
+            int ID = 0;
+            int.TryParse(TablaUsuario.CurrentRow.Cells["ID"].Value.ToString(), out ID);
+            Respuesta<Users> respuesta = await Respuesta<Users>.GetRespuesta<Users>(await Crud.Get("api/users", ID));
+
+            Users users = respuesta.Objeto;
+            users.Active = 1;
+            respuesta = await Respuesta<Users>.GetRespuesta<Users>(await Crud.Put<Users>("api/users", ID, users));
+
+
+            if (respuesta.Mensaje.Equals(HttpStatusCode.NoContent.ToString()))
+            {
+
+
+                Respuesta<IEnumerable<UsuarioBloqueados>> respuestaUB = await Respuesta<IEnumerable<UsuarioBloqueados>>.GetRespuesta<IEnumerable<UsuarioBloqueados>>(await Crud.Get("api/usuarioBloqueados"));
+
+                IEnumerable<UsuarioBloqueados> listaUsuarioBloqueados = respuestaUB.Objeto.Where(T=>T.UsuarioID == ID);
+                foreach (UsuarioBloqueados usuarioB in listaUsuarioBloqueados)
+                {
+                    await Crud.Delete("api/usuarioBloqueados",usuarioB.ID);
+                }
+
+                btnRestablecer.Enabled = true;
+                TablaUsuario.Enabled = true;
+                await MostrarAlerta("Se restablecio correctamente", Color.DarkGreen);
+                await filtrar();
+                return;
+            }
+            btnSuspender.Enabled = true;
+            TablaUsuario.Enabled = true;
+            await MostrarAlerta(respuesta.Mensaje, Color.DarkGreen);
+            return;
+
+
+        }
+        private async Task MostrarAlerta(string mensaje,Color? color = null)
+        {
+            lblAlerta.Visible = true;
+            lblAlerta.ForeColor = (Color) color;
+            if (color == null)
+            {
+                lblAlerta.ForeColor = Color.DarkGreen;
+            }
+            lblAlerta.Text = mensaje;
+           
+            lblAlerta.Visible = await Task<bool>.Run(() =>
+            {
+                Thread.Sleep(5000);
+
+                return false;
+
+            });
+        }
+
         private async Task llenarComboOficina(ComboBox  comboBox)
         {
             comboBox.DataSource = null;
@@ -53,7 +150,7 @@ namespace Vista
                 Oficina = e.Offices != null ? e.Offices.Title : "",
                 Rol = e.Roles != null ? e.Roles.Title : "",
                 Edad = DateTime.Now.Year - e.Birthdate.Value.Year,
-                Estado = e.Active != null ? (int)e.Active : 0
+                Estado = e.Active != null ? (int)e.Active : 1
             }).ToList();
             tabla.DataSource = listaUsuario;
             tabla.Columns["ID"].Visible = false;
@@ -63,25 +160,83 @@ namespace Vista
         }
         private async void FormularioAdmin_Load(object sender, EventArgs e)
         {
-           await llenarComboOficina(comboOficina);
+            btnSuspender.Enabled = false;
+            btnRestablecer.Enabled = false;
+            await llenarComboOficina(comboOficina);
         }
 
         private async void comboOficina_SelectedIndexChanged(object sender, EventArgs e)
         {
+            await filtrar();
+        }
+
+        private async Task filtrar()
+        {
             comboOficina.Enabled = false;
-            if(comboOficina.SelectedIndex == 0)
+            if (comboOficina.SelectedIndex == 0)
             {
-              await  llenarTabla(TablaUsuario);
+                await llenarTabla(TablaUsuario);
             }
             else
             {
-                await llenarTabla(TablaUsuario,(int)comboOficina.SelectedValue);
+                await llenarTabla(TablaUsuario, (int)comboOficina.SelectedValue);
             }
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+   
+
+        private void SetHabilitarControlesDeSuspensionORestablecimientos()
+        {
+            try
+            {
+
+                btnSuspender.Enabled = false;
+                btnRestablecer.Enabled = false;
+                if (TablaUsuario.CurrentRow.Cells["Estado"].Value.ToString().Equals(1.ToString()))
+                {
+                    btnSuspender.Enabled = true;
+                    
+                }
+                else
+                {
+                    btnRestablecer.Enabled = true;
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        private void TablaUsuario_SelectionChanged(object sender, EventArgs e)
+        {
+            SetHabilitarControlesDeSuspensionORestablecimientos();
+
+        }
+
+        private async void btnSuspender_Click(object sender, EventArgs e)
+        {
+            await suspenderCuenta();
+        }
+
+        private void TablaUsuario_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+
+            if (TablaUsuario.Rows[e.RowIndex].Cells["Estado"].Value.ToString().Equals(0.ToString()))
+            {
+                TablaUsuario.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Yellow;
+
+            }
+        }
+
+        private async void btnRestablecer_Click(object sender, EventArgs e)
+        {
+            await RestablecerCuenta();
         }
     }
 }
