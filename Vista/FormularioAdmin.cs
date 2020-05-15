@@ -202,6 +202,10 @@ namespace Vista
 
         private async Task filtrar()
         {
+            if (comboOficina.SelectedIndex == null)
+            {
+                return;
+            }
             comboOficina.Enabled = false;
             if (comboOficina.SelectedIndex == 0)
             {
@@ -269,7 +273,7 @@ namespace Vista
             await RestablecerCuenta();
         }
 
-        private void timerSegundoPlano_Tick(object sender, EventArgs e)
+        private async void timerSegundoPlano_Tick(object sender, EventArgs e)
         {
             if (Application.OpenForms.Count == CANTIDAD_DE_FORMULARIO_ABIERTO)
             {
@@ -278,6 +282,7 @@ namespace Vista
                     timerSegundoPlano.Enabled = false;
                     this.Enabled = true;
                     this.Focus();
+                    await filtrar();
                 }
             }
         }
@@ -293,6 +298,10 @@ namespace Vista
        
         private async void btnCambiarRol_Click(object sender, EventArgs e)
         {
+            if(TablaUsuario.CurrentRow == null)
+            {
+                return;
+            }
             int ID = 0;
             int.TryParse(TablaUsuario.CurrentRow.Cells["ID"].Value.ToString(), out ID);
             Respuesta<Users> respuesta = await Respuesta<Users>.GetRespuesta<Users>(await Crud.Get("api/users", ID));
