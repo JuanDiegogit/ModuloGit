@@ -79,6 +79,12 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TablaView\UserView.cs" />
+    <Compile Include="verIntentos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="verIntentos.Designer.cs">
+      <DependentUpon>verIntentos.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AgregarUsuario.resx">
       <DependentUpon>AgregarUsuario.cs</DependentUpon>
     </EmbeddedResource>
@@ -103,6 +109,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="verIntentos.resx">
+      <DependentUpon>verIntentos.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
