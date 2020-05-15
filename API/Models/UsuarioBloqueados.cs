@@ -9,7 +9,6 @@
 
 namespace API.Models
 {
-    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
@@ -19,11 +18,8 @@ namespace API.Models
         public int adminitradorID { get; set; }
         public int UsuarioID { get; set; }
         public System.DateTime fechaYHora { get; set; }
-
-      
-        [JsonIgnore]
+    
         public virtual Users Admin { get; set; }
-        [JsonIgnore]
-        public virtual Users User { get; set; }
+        public virtual Users Users1 { get; set; }
     }
 }

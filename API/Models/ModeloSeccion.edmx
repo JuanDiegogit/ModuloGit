@@ -41,7 +41,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleID" Type="int" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -186,7 +186,7 @@
           <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Contact" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Countries" Relationship="Self.FK_Office_Country" FromRole="Offices" ToRole="Countries" />
-          <NavigationProperty Name="Users" Relationship="Self.FK_Users_Offices" FromRole="Offices" ToRole="Users" />
+          <NavigationProperty Name="Users" Relationship="session1Model.FK_Users_Offices" FromRole="Offices" ToRole="Users" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -194,26 +194,7 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" />
           <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Users" Relationship="Self.FK_Users_Roles" FromRole="Roles" ToRole="Users" />
-        </EntityType>
-        <EntityType Name="Users">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="RoleID" Type="Int32" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="OfficeID" Type="Int32" />
-          <Property Name="Birthdate" Type="DateTime" Precision="0" />
-          <Property Name="Active" Type="Int32" />
-          <NavigationProperty Name="Offices" Relationship="Self.FK_Users_Offices" FromRole="Users" ToRole="Offices" />
-          <NavigationProperty Name="Roles" Relationship="Self.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
-          <NavigationProperty Name="intentosFallido" Relationship="session1Model.FK__intentosF__Usuar__49C3F6B7" FromRole="Users" ToRole="intentosFallido" />
-          <NavigationProperty Name="AdminitradoresQueHaBloquead" Relationship="session1Model.FK__UsuarioBl__admin__4D94879B" FromRole="Users" ToRole="UsuarioBloqueados" />
-          <NavigationProperty Name="UsuarioBloqueados" Relationship="session1Model.FK__UsuarioBl__Usuar__4E88ABD4" FromRole="Users" ToRole="UsuarioBloqueados" />
+          <NavigationProperty Name="Users" Relationship="session1Model.FK_Users_Roles" FromRole="Roles" ToRole="Users" />
         </EntityType>
         <Association Name="FK_Office_Country">
           <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
@@ -227,52 +208,28 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Users_Offices">
-          <End Role="Offices" Type="Self.Offices" Multiplicity="0..1" />
-          <End Role="Users" Type="Self.Users" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Offices">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Users">
-              <PropertyRef Name="OfficeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Users_Roles">
-          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
-          <End Role="Users" Type="Self.Users" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Roles">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Users">
-              <PropertyRef Name="RoleID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="session1Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Countries" EntityType="Self.Countries" />
           <EntitySet Name="Offices" EntityType="Self.Offices" />
           <EntitySet Name="Roles" EntityType="Self.Roles" />
-          <EntitySet Name="Users" EntityType="Self.Users" />
           <AssociationSet Name="FK_Office_Country" Association="Self.FK_Office_Country">
             <End Role="Countries" EntitySet="Countries" />
             <End Role="Offices" EntitySet="Offices" />
           </AssociationSet>
-          <AssociationSet Name="FK_Users_Offices" Association="Self.FK_Users_Offices">
-            <End Role="Offices" EntitySet="Offices" />
-            <End Role="Users" EntitySet="Users" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
-            <End Role="Roles" EntitySet="Roles" />
-            <End Role="Users" EntitySet="Users" />
-          </AssociationSet>
           <EntitySet Name="intentosFallido" EntityType="session1Model.intentosFallido" />
           <EntitySet Name="UsuarioBloqueados" EntityType="session1Model.UsuarioBloqueados" />
+          <EntitySet Name="Users" EntityType="session1Model.Users" />
           <AssociationSet Name="FK__intentosF__Usuar__49C3F6B7" Association="session1Model.FK__intentosF__Usuar__49C3F6B7">
             <End Role="Users" EntitySet="Users" />
             <End Role="intentosFallido" EntitySet="intentosFallido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Offices" Association="session1Model.FK_Users_Offices">
+            <End Role="Offices" EntitySet="Offices" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Roles" Association="session1Model.FK_Users_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
           </AssociationSet>
           <AssociationSet Name="FK__UsuarioBl__admin__4D94879B" Association="session1Model.FK__UsuarioBl__admin__4D94879B">
             <End Role="Users" EntitySet="Users" />
@@ -282,7 +239,7 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="UsuarioBloqueados" EntitySet="UsuarioBloqueados" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="intentosFallido">
           <Key>
             <PropertyRef Name="ID" />
@@ -301,7 +258,26 @@
           <Property Name="UsuarioID" Type="Int32" Nullable="false" />
           <Property Name="fechaYHora" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Admin" Relationship="session1Model.FK__UsuarioBl__admin__4D94879B" FromRole="UsuarioBloqueados" ToRole="Users" />
-          <NavigationProperty Name="User" Relationship="session1Model.FK__UsuarioBl__Usuar__4E88ABD4" FromRole="UsuarioBloqueados" ToRole="Users" />
+          <NavigationProperty Name="Users1" Relationship="session1Model.FK__UsuarioBl__Usuar__4E88ABD4" FromRole="UsuarioBloqueados" ToRole="Users" />
+          </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OfficeID" Type="Int32" />
+          <Property Name="Birthdate" Type="DateTime" Precision="0" />
+          <Property Name="Active" Type="Int32" />
+          <NavigationProperty Name="intentosFallido" Relationship="session1Model.FK__intentosF__Usuar__49C3F6B7" FromRole="Users" ToRole="intentosFallido" />
+          <NavigationProperty Name="Offices" Relationship="session1Model.FK_Users_Offices" FromRole="Users" ToRole="Offices" />
+          <NavigationProperty Name="Roles" Relationship="session1Model.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
+          <NavigationProperty Name="Admin" Relationship="session1Model.FK__UsuarioBl__admin__4D94879B" FromRole="Users" ToRole="UsuarioBloqueados" />
+          <NavigationProperty Name="User" Relationship="session1Model.FK__UsuarioBl__Usuar__4E88ABD4" FromRole="Users" ToRole="UsuarioBloqueados" />
         </EntityType>
         <Association Name="FK__intentosF__Usuar__49C3F6B7">
           <End Type="session1Model.Users" Role="Users" Multiplicity="1" />
@@ -312,6 +288,30 @@
             </Principal>
             <Dependent Role="intentosFallido">
               <PropertyRef Name="UsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Offices">
+          <End Type="session1Model.Offices" Role="Offices" Multiplicity="0..1" />
+          <End Type="session1Model.Users" Role="Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Offices">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="OfficeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Roles">
+          <End Type="session1Model.Roles" Role="Roles" Multiplicity="1" />
+          <End Type="session1Model.Users" Role="Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="RoleID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -339,7 +339,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -372,21 +372,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="session1Model.Users">
-              <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="OfficeID" ColumnName="OfficeID" />
-                <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="intentosFallido">
             <EntityTypeMapping TypeName="session1Model.intentosFallido">
               <MappingFragment StoreEntitySet="intentosFallido">
@@ -402,6 +387,21 @@
                 <ScalarProperty Name="fechaYHora" ColumnName="fechaYHora" />
                 <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
                 <ScalarProperty Name="adminitradorID" ColumnName="adminitradorID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="session1Model.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
+                <ScalarProperty Name="OfficeID" ColumnName="OfficeID" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

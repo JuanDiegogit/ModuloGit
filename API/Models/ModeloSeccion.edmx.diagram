@@ -8,13 +8,13 @@
         <EntityTypeShape EntityType="session1Model.Countries" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
         <EntityTypeShape EntityType="session1Model.Offices" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="session1Model.Roles" Width="1.5" PointX="3" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="session1Model.Users" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="session1Model.FK_Office_Country" ManuallyRouted="false" />
-        <AssociationConnector Association="session1Model.FK_Users_Offices" ManuallyRouted="false" />
-        <AssociationConnector Association="session1Model.FK_Users_Roles" ManuallyRouted="false" />
         <EntityTypeShape EntityType="session1Model.intentosFallido" Width="1.5" PointX="7.5" PointY="8.75" />
         <EntityTypeShape EntityType="session1Model.UsuarioBloqueados" Width="1.5" PointX="7.5" PointY="5.75" />
+        <EntityTypeShape EntityType="session1Model.Users" Width="1.5" PointX="5.25" PointY="2.5" />
         <AssociationConnector Association="session1Model.FK__intentosF__Usuar__49C3F6B7" />
+        <AssociationConnector Association="session1Model.FK_Users_Offices" />
+        <AssociationConnector Association="session1Model.FK_Users_Roles" />
         <AssociationConnector Association="session1Model.FK__UsuarioBl__admin__4D94879B" />
         <AssociationConnector Association="session1Model.FK__UsuarioBl__Usuar__4E88ABD4" />
       </Diagram>

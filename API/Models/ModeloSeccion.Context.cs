@@ -28,8 +28,8 @@ namespace API.Models
         public virtual DbSet<Countries> Countries { get; set; }
         public virtual DbSet<Offices> Offices { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
-        public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<intentosFallido> intentosFallido { get; set; }
         public virtual DbSet<UsuarioBloqueados> UsuarioBloqueados { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
     }
 }
